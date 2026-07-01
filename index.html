@@ -11,7 +11,7 @@
 <link href="https://fonts.googleapis.com/css2?family=Big+Shoulders+Display:wght@600;700;800;900&display=swap" rel="stylesheet">
 <style>
 *{margin:0;padding:0;box-sizing:border-box;-webkit-tap-highlight-color:transparent}
-:root{--bg:#0a0b0d;--card:#15181e;--card2:#0c0e12;--line:rgba(255,255,255,.08);--text:#eceef1;--muted:#868d97;--dim:#3a4049;--accent:#3fdc6e;--blue:#58a6ff;--amber:#ffc23d;--warn:#ff6a3d}
+:root{--bg:#0a0b0d;--card:#15181e;--card2:#0c0e12;--line:rgba(255,255,255,.08);--text:#eceef1;--muted:#868d97;--dim:#3a4049;--accent:#e8824e;--accent-d:#cf6a36;--ink:#1c1206;--blue:#58a6ff;--warn:#ff4d4d}
 body{background:var(--bg);color:var(--text);font-family:'Hanken Grotesk',-apple-system,system-ui,sans-serif;min-height:100dvh;-webkit-font-smoothing:antialiased}
 .disp{font-family:'Big Shoulders Display',-apple-system,system-ui,sans-serif;font-weight:800;letter-spacing:.01em}
 input{-webkit-appearance:none;font-family:inherit}
@@ -22,301 +22,374 @@ input::-webkit-inner-spin-button{-webkit-appearance:none}
 .top{display:flex;align-items:center;justify-content:space-between;margin-bottom:18px}
 .logo{display:flex;align-items:center;gap:8px;font-size:20px;letter-spacing:.16em}
 .logo .dot{width:9px;height:9px;border-radius:50%;background:var(--accent);box-shadow:0 0 14px var(--accent)}
-.sub{font-size:12.5px;color:var(--muted);font-weight:600}
 .gear{background:none;border:none;color:var(--muted);font-size:18px;cursor:pointer;padding:4px}
 .lb{font-size:11px;font-weight:800;color:var(--muted);text-transform:uppercase;letter-spacing:.12em;margin:0 0 10px}
 .lb.mt{margin-top:24px}
 h1.pgh{font-size:26px;margin:0 0 16px}
-
-/* DP hero */
-.dp{background:linear-gradient(135deg,rgba(63,220,110,.16),rgba(12,14,18,.5));border:1px solid rgba(63,220,110,.3);border-radius:18px;padding:20px;margin-bottom:14px}
-.dp .eyebrow{font-size:11px;font-weight:800;letter-spacing:.12em;text-transform:uppercase;color:var(--accent)}
-.dp .big{font-size:40px;line-height:1;margin:8px 0 2px}
+.dp{background:linear-gradient(135deg,rgba(232,130,78,.16),rgba(12,14,18,.5));border:1px solid rgba(232,130,78,.32);border-radius:18px;padding:20px;margin-bottom:14px}
+.dp .eyebrow{font-size:11px;font-weight:800;letter-spacing:.1em;text-transform:uppercase;color:var(--accent)}
+.dp .big{font-size:38px;line-height:1;margin:8px 0 2px}
 .dp .big small{font-size:18px;color:var(--muted)}
-.bar{height:12px;border-radius:8px;background:#0c0e12;border:1px solid var(--line);overflow:hidden;margin:14px 0 6px}
-.bar i{display:block;height:100%;background:linear-gradient(90deg,#2faf55,var(--accent));border-radius:8px;transition:width .6s cubic-bezier(.2,.7,.3,1)}
+.bar{height:12px;border-radius:8px;background:#0c0e12;border:1px solid var(--line);overflow:hidden;margin:12px 0 6px}
+.bar i{display:block;height:100%;background:linear-gradient(90deg,var(--accent-d),var(--accent));border-radius:8px;transition:width .6s cubic-bezier(.2,.7,.3,1)}
 .dp .meta{font-size:13px;color:var(--muted)}
-.contrib{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-top:14px}
-.cc{background:#0c0e1255;border:1px solid var(--line);border-radius:12px;padding:12px}
-.cc .n{font-size:12px;color:var(--muted);font-weight:700}
-.cc .v{font-size:22px;line-height:1;margin-top:4px;color:var(--accent)}
-
+.badge{display:inline-block;font-size:11px;font-weight:800;padding:3px 9px;border-radius:20px;text-transform:uppercase;letter-spacing:.05em}
+.badge.live{background:rgba(232,130,78,.16);color:var(--accent)}
+.badge.done{background:rgba(88,166,255,.16);color:var(--blue)}
 .card{background:var(--card);border:1px solid var(--line);border-radius:16px;padding:18px;margin-bottom:12px}
 .row{display:flex;justify-content:space-between;align-items:center}
+.prow{display:flex;justify-content:space-between;align-items:baseline;font-size:14.5px;font-weight:700;margin:14px 0 0}
+.prow .who{font-size:15px}.prow .amt{color:var(--accent)}
+.sub{font-size:12.5px;color:var(--muted);font-weight:600}
 .kpi{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:12px}
 .kpi .b{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:14px}
 .kpi .b .n{font-size:11.5px;color:var(--muted);font-weight:700;text-transform:uppercase;letter-spacing:.05em}
-.kpi .b .v{font-size:26px;line-height:1;margin-top:6px}
-.done{font-size:13px;font-weight:800}
-.done.y{color:var(--accent)}.done.n{color:var(--muted)}
-
-/* month pills */
-.months{display:flex;gap:6px;overflow-x:auto;padding-bottom:4px;margin-bottom:16px}
-.mp{flex:0 0 auto;background:#0c0e12;border:1px solid var(--line);color:var(--muted);border-radius:10px;padding:9px 13px;font-weight:800;font-size:13px;cursor:pointer}
-.mp.on{background:var(--accent);color:#06140a;border-color:var(--accent)}
-
-/* transfer person card */
-.pcard{background:var(--card);border:1px solid var(--line);border-radius:16px;padding:16px;margin-bottom:12px}
-.pcard .ph{display:flex;justify-content:space-between;align-items:center;margin-bottom:4px}
-.pcard .pn{font-size:17px;font-weight:800}
-.pcard .pc{font-size:12.5px;color:var(--muted);margin-bottom:10px}
+.kpi .b .v{font-size:24px;line-height:1;margin-top:6px}
+.split2{display:flex;gap:18px;margin-top:10px}
+.split2 .s .n{font-size:12px;color:var(--muted);font-weight:700}
+.split2 .s .v{font-size:20px;color:var(--accent);margin-top:2px}
+.grp{font-size:11px;font-weight:800;color:var(--accent);text-transform:uppercase;letter-spacing:.07em;margin:16px 0 2px;padding-top:10px;border-top:1px solid var(--line)}
+.card .grp:first-of-type{border-top:none;padding-top:2px;margin-top:0}
 .tr{display:flex;align-items:center;justify-content:space-between;gap:10px;padding:11px 0;border-top:1px solid var(--line)}
+.grp + .tr{border-top:none}
+.tr.off{opacity:.4}
 .tr .tl{font-size:14.5px}
-.tr .ta{font-size:12.5px;color:var(--muted)}
+.tr .ta{font-size:12px;color:var(--muted);margin-top:2px}
 .sw{flex-shrink:0;width:50px;height:30px;border-radius:16px;background:#0c0e12;border:1px solid var(--line);position:relative;cursor:pointer;transition:.18s}
 .sw i{position:absolute;top:3px;left:3px;width:22px;height:22px;border-radius:50%;background:var(--dim);transition:.18s}
 .sw.on{background:var(--accent);border-color:var(--accent)}
-.sw.on i{left:25px;background:#06140a}
+.sw.on i{left:25px;background:var(--ink)}
 .sw.busy{opacity:.5}
-
-/* acertos */
-.dbt{display:flex;justify-content:space-between;gap:10px;padding:11px 0;border-top:1px solid var(--line)}
+.dbt{display:flex;justify-content:space-between;gap:10px;align-items:flex-start;padding:11px 0;border-top:1px solid var(--line)}
 .dbt:first-child{border-top:none}
 .dbt .dl{font-size:14px}.dbt .dn{font-size:12px;color:var(--muted);margin-top:2px}
 .dbt .dv{font-weight:800;color:var(--accent);white-space:nowrap}
+.mini{background:rgba(232,130,78,.14);border:1px solid rgba(232,130,78,.4);color:var(--accent);border-radius:8px;padding:5px 10px;font-size:12px;font-weight:800;cursor:pointer;font-family:inherit;margin-top:4px}
 .lg{display:flex;justify-content:space-between;gap:10px;font-size:13px;padding:8px 0;border-top:1px solid var(--card2);color:var(--muted)}
 .lg b{color:var(--text)}
-.btns{display:flex;gap:8px;margin:14px 0 4px}
-.btns button{flex:1;border-radius:12px;padding:13px;font-weight:800;font-size:14px;cursor:pointer;font-family:inherit;border:1px solid var(--line);background:var(--card2);color:var(--text)}
-.btns button.pri{background:var(--accent);color:#06140a;border:none}
-
-/* inputs / setup / modal */
+.btns{display:flex;gap:8px;margin:14px 0 4px;flex-wrap:wrap}
+.btns button{flex:1;min-width:130px;border-radius:12px;padding:13px;font-weight:800;font-size:14px;cursor:pointer;font-family:inherit;border:1px solid var(--line);background:var(--card2);color:var(--text)}
+.btns button.pri{background:var(--accent);color:var(--ink);border:none}
 .field{display:flex;flex-direction:column;gap:7px;margin-bottom:14px}
 .field span{font-size:12px;font-weight:700;text-transform:uppercase;letter-spacing:.04em;color:var(--muted)}
 .inp{width:100%;background:var(--card2);border:2px solid var(--line);border-radius:12px;padding:14px;color:var(--text);font-size:16px;outline:none;font-family:inherit}
 .inp:focus{border-color:var(--accent)}
-.cta{width:100%;padding:16px;border:none;border-radius:13px;background:var(--accent);color:#06140a;font-size:17px;font-weight:900;cursor:pointer;font-family:'Big Shoulders Display',sans-serif;letter-spacing:.04em}
-.seg{display:flex;gap:6px;background:#0c0e12;border:1px solid var(--line);border-radius:11px;padding:4px}
-.seg button{flex:1;background:none;border:none;color:var(--muted);font-family:inherit;font-weight:800;padding:9px;border-radius:8px;cursor:pointer}
-.seg button.on{background:var(--accent);color:#06140a}
-.overlay{position:fixed;inset:0;z-index:60;background:rgba(5,6,8,.8);backdrop-filter:blur(6px);display:flex;align-items:flex-end;justify-content:center;padding:0}
+.cta{width:100%;padding:16px;border:none;border-radius:13px;background:var(--accent);color:var(--ink);font-size:17px;font-weight:900;cursor:pointer;font-family:'Big Shoulders Display',sans-serif;letter-spacing:.04em}
+.seg{display:flex;gap:6px;background:#0c0e12;border:1px solid var(--line);border-radius:11px;padding:4px;flex-wrap:wrap}
+.seg button{flex:1;min-width:80px;background:none;border:none;color:var(--muted);font-family:inherit;font-weight:800;padding:9px;border-radius:8px;cursor:pointer}
+.seg button.on{background:var(--accent);color:var(--ink)}
+.overlay{position:fixed;inset:0;z-index:60;background:rgba(5,6,8,.8);backdrop-filter:blur(6px);display:flex;align-items:flex-end;justify-content:center}
 .sheet{width:100%;max-width:560px;background:var(--card);border:1px solid var(--line);border-radius:20px 20px 0 0;padding:22px 18px max(22px,env(safe-area-inset-bottom))}
 .sheet h3{font-size:22px;margin:0 0 14px}
 .mclose{background:none;border:none;color:var(--muted);font-size:24px;cursor:pointer;float:right;line-height:1}
-
-/* bottom nav */
 .nav{position:fixed;left:0;right:0;bottom:0;z-index:40;display:flex;justify-content:space-around;background:rgba(13,15,19,.94);backdrop-filter:blur(16px);border-top:1px solid var(--line);padding:8px 4px calc(8px + env(safe-area-inset-bottom,0px))}
-.nav button{flex:1;background:none;border:none;color:var(--muted);display:flex;flex-direction:column;align-items:center;gap:4px;font-family:inherit;font-weight:700;font-size:10.5px;cursor:pointer;padding:4px 0}
+.nav button{flex:1;background:none;border:none;color:var(--muted);display:flex;flex-direction:column;align-items:center;gap:4px;font-family:inherit;font-weight:700;font-size:10px;cursor:pointer;padding:4px 0}
 .nav button.on{color:var(--accent)}
 .nav svg{width:22px;height:22px}
-
 .center{min-height:100dvh;display:flex;flex-direction:column;justify-content:center;padding:24px 18px;max-width:440px;margin:0 auto}
 .spin{width:34px;height:34px;border:3px solid var(--line);border-top-color:var(--accent);border-radius:50%;animation:sp .8s linear infinite;margin:0 auto}
 @keyframes sp{to{transform:rotate(360deg)}}
-.toast{position:fixed;top:16px;left:50%;transform:translateX(-50%);background:var(--accent);color:#06140a;padding:10px 22px;border-radius:11px;font-weight:800;font-size:13.5px;z-index:99;animation:fo 2.4s forwards}
+.toast{position:fixed;top:16px;left:50%;transform:translateX(-50%);background:var(--accent);color:var(--ink);padding:10px 22px;border-radius:11px;font-weight:800;font-size:13.5px;z-index:99;animation:fo 2.6s forwards}
 .toast.err{background:var(--warn);color:#fff}
-@keyframes fo{0%,75%{opacity:1}100%{opacity:0}}
-.err-msg{background:rgba(255,106,61,.12);border:1px solid rgba(255,106,61,.4);color:#ff9c80;padding:11px 14px;border-radius:10px;font-size:13.5px;margin-bottom:14px}
+@keyframes fo{0%,72%{opacity:1}100%{opacity:0}}
+.err-msg{background:rgba(255,77,77,.12);border:1px solid rgba(255,77,77,.4);color:#ff9c9c;padding:12px 14px;border-radius:10px;font-size:13.5px;margin-bottom:14px;line-height:1.45}
 .muted{color:var(--muted);font-size:13px}
 </style>
 </head>
 <body>
 <div id="app"></div>
 <script>
-/* ===== config (URL + password ficam só neste telemóvel) ===== */
-const BAKED_URL = "https://script.google.com/macros/s/AKfycbxFbrc6TBJQkGt93r5WgH4Jf_qx4bY_jbYwNj5hoF_8JjHGuOLv_cwclYosGxWTp-vLwQ/exec";
+const BAKED_URL = "https://script.google.com/macros/s/AKfycbxBxN6_3wdWv2pdCtIQq6o2TH8A0hj2E7KCrqdUhkV6RI6sXW1Caxf9Iz2D38tVQl_6/exec";
 let API = localStorage.getItem('fin_api') || BAKED_URL || "";
 let PW  = localStorage.getItem('fin_pw')  || "";
+let S=null, VIEW='home', TT=null, MODAL=null, BUSY=false;
+const $=()=>document.getElementById('app');
+const eur=n=>'€'+Math.round(Number(n)||0).toLocaleString('pt-PT');
+const clamp=p=>Math.max(0,Math.min(100,p||0));
 
-let S = null;            // último estado da folha
-let VIEW = 'home';       // home | transfers | acertos
-let MI = new Date().getMonth();  // mês selecionado
-let TT = null, MODAL = null, BUSY = false;
-const $ = () => document.getElementById('app');
-const eur = n => '€' + Math.round(Number(n)||0).toLocaleString('pt-PT');
-
-/* ===== API ===== */
 async function api(action, extra){
-  const body = JSON.stringify(Object.assign({action, password: PW}, extra||{}));
-  const res = await fetch(API, {method:'POST', headers:{'Content-Type':'text/plain;charset=utf-8'}, body, redirect:'follow'});
-  const j = await res.json();
+  const body=JSON.stringify(Object.assign({action,password:PW},extra||{}));
+  const res=await fetch(API,{method:'POST',headers:{'Content-Type':'text/plain;charset=utf-8'},body,redirect:'follow'});
+  const j=await res.json();
   if(!j.ok){ if(j.error==='auth'){ const e=new Error('auth'); e.auth=true; throw e; } throw new Error(j.error||'erro'); }
   return j.data;
 }
-function toast(msg, err){ TT={msg,err}; render(); setTimeout(()=>{TT=null;render();}, 2400); }
-
-/* ===== boot ===== */
+function toast(msg,err){ TT={msg,err}; render(); setTimeout(()=>{TT=null;render();},2600); }
 async function boot(){
-  if(!API || !PW){ VIEW='setup'; render(); return; }
+  if(!API||!PW){ VIEW='setup'; render(); return; }
   VIEW='loading'; render();
-  try{ S = await api('state'); VIEW='home'; render(); }
-  catch(e){ if(e.auth){ localStorage.removeItem('fin_pw'); PW=''; VIEW='setup'; render(); toast('Password errada', true);} else { VIEW='error'; render(); } }
-}
-
-/* ===== actions ===== */
-async function refresh(){ try{ S = await api('state'); render(); }catch(e){ toast('Erro a atualizar', true); } }
-
-async function toggle(t, person){
-  if(BUSY) return; BUSY=true;
-  const col = 4 + MI, value = !t.ticks[MI];
-  t.ticks[MI] = value;            // otimista
-  render();
-  try{ S = await api('toggle', {row:t.row, col, value, person}); }
-  catch(e){ t.ticks[MI] = !value; toast('Não guardou', true); }
-  BUSY=false; render();
-}
-
-async function submitPayment(){
-  const amount = parseFloat((document.getElementById('p_amt').value||'').replace(',','.'));
-  const from = document.getElementById('p_from').value;
-  const notas = document.getElementById('p_notas').value;
-  if(!amount||amount<=0){ toast('Mete um valor', true); return; }
-  MODAL=null; VIEW='loading'; render();
-  try{ S = await api('addPayment', {amount, from, to: from==='AR'?'BD':'AR', notas}); VIEW='acertos'; render(); toast('Pagamento registado'); }
-  catch(e){ VIEW='acertos'; render(); toast('Erro: '+e.message, true); }
-}
-async function submitDebt(){
-  const orig = parseFloat((document.getElementById('d_orig').value||'').replace(',','.'));
-  const de = document.getElementById('d_de').value;
-  const notas = document.getElementById('d_notas').value;
-  if(!orig||orig<=0){ toast('Mete um valor', true); return; }
-  if(!notas.trim()){ toast('Descreve o acerto', true); return; }
-  MODAL=null; VIEW='loading'; render();
-  try{ S = await api('addDebt', {orig, de, para: de==='BD'?'AR':'BD', notas}); VIEW='acertos'; render(); toast('Acerto adicionado'); }
-  catch(e){ VIEW='acertos'; render(); toast('Erro: '+e.message, true); }
-}
-
-/* ===== setup ===== */
-function saveSetup(){
-  const url = BAKED_URL || document.getElementById('s_url').value.trim();
-  const pw = document.getElementById('s_pw').value;
-  if(!url){ toast('Falta o link', true); return; }
-  if(!pw){ toast('Falta a password', true); return; }
-  API=url; PW=pw;
-  $().innerHTML = '<div class="center"><div class="spin"></div><p class="muted" style="text-align:center;margin-top:16px">A ligar à folha…</p></div>';
-  api('state').then(d=>{ S=d; localStorage.setItem('fin_api',API); localStorage.setItem('fin_pw',PW); VIEW='home'; render(); })
-    .catch(e=>{ VIEW='setup'; render(); toast(e.auth?'Password errada':'Não consegui ligar — confirma o link', true); });
+  try{ S=await api('state'); VIEW='home'; render(); }
+  catch(e){ if(e.auth){ localStorage.removeItem('fin_pw'); PW=''; VIEW='setup'; render(); toast('Password errada',true);} else { VIEW='error'; render(); } }
 }
 function logout(){ localStorage.removeItem('fin_pw'); PW=''; S=null; VIEW='setup'; render(); }
 
 /* ===== render ===== */
 function render(){
-  const a = $();
-  if(VIEW==='setup'){ a.innerHTML = vSetup(); return; }
-  if(VIEW==='loading'){ a.innerHTML = '<div class="center"><div class="spin"></div></div>' + tt(); return; }
-  if(VIEW==='error'){ a.innerHTML = '<div class="center"><div class="err-msg">Não consegui ligar à folha. Verifica a ligação e tenta outra vez.</div><button class="cta" onclick="boot()">Tentar de novo</button><button class="gear" style="margin-top:14px" onclick="logout()">Mudar definições</button></div>'; return; }
-  let h = '';
-  if(VIEW==='home') h = vHome();
-  if(VIEW==='transfers') h = vTransfers();
-  if(VIEW==='acertos') h = vAcertos();
-  a.innerHTML = h + nav() + (MODAL?MODAL():'') + tt();
+  const a=$();
+  if(VIEW==='setup'){ a.innerHTML=vSetup(); return; }
+  if(VIEW==='loading'){ a.innerHTML='<div class="center"><div class="spin"></div></div>'+tt(); return; }
+  if(VIEW==='error'){ a.innerHTML='<div class="center"><div class="err-msg">Não consegui ligar à folha.</div><button class="cta" onclick="boot()">Tentar de novo</button><button class="gear" style="margin-top:14px" onclick="logout()">Mudar definições</button></div>'; return; }
+  let h='';
+  if(VIEW==='home') h=vHome();
+  if(VIEW==='conjunta') h=vConjunta();
+  if(VIEW==='familia') h=vFamilia();
+  if(VIEW==='despesas') h=vDespesas();
+  a.innerHTML=h+nav()+(MODAL?MODAL():'')+tt();
 }
 function tt(){ return TT?`<div class="toast ${TT.err?'err':''}">${TT.msg}</div>`:''; }
 function go(v){ VIEW=v; render(); }
-
-function header(title){
-  return `<div class="top"><div class="logo disp"><span class="dot"></span>FINANÇAS</div>
-    <button class="gear" onclick="logout()">⚙</button></div>`;
-}
+function header(){ return `<div class="top"><div class="logo disp"><span class="dot"></span>FINANÇAS</div><button class="gear" onclick="logout()">⚙</button></div>`; }
+function bar(pct){ return `<div class="bar"><i style="width:${clamp(pct)}%"></i></div>`; }
 
 function vSetup(){
   return `<div class="center">
     <div class="logo disp" style="font-size:24px;margin-bottom:6px"><span class="dot"></span>FINANÇAS</div>
     <p class="sub" style="margin-bottom:22px">Bruno &amp; Laura</p>
-    ${BAKED_URL?'':`<label class="field"><span>Link da app (Web App URL)</span><input id="s_url" class="inp" placeholder="https://script.google.com/macros/s/.../exec"></label>`}
+    ${BAKED_URL?'':`<label class="field"><span>Link da app</span><input id="s_url" class="inp" placeholder="https://script.google.com/.../exec"></label>`}
     <label class="field"><span>Password partilhada</span><input id="s_pw" class="inp" type="password" placeholder="••••••••"></label>
     <button class="cta" onclick="saveSetup()">Ligar</button>
     <p class="muted" style="margin-top:16px;text-align:center">Os dados ficam na vossa folha Google. Isto só guarda o acesso neste telemóvel.</p>
   </div>`;
 }
+function saveSetup(){
+  const url=BAKED_URL||document.getElementById('s_url').value.trim(); const pw=document.getElementById('s_pw').value;
+  if(!url){ toast('Falta o link',true); return; } if(!pw){ toast('Falta a password',true); return; }
+  API=url; PW=pw; $().innerHTML='<div class="center"><div class="spin"></div></div>';
+  api('state').then(d=>{ S=d; localStorage.setItem('fin_api',API); localStorage.setItem('fin_pw',PW); VIEW='home'; render(); })
+    .catch(e=>{ VIEW='setup'; render(); toast(e.auth?'Password errada':'Não consegui ligar',true); });
+}
 
+/* ===== INÍCIO (Casa) ===== */
 function vHome(){
-  const dp=S.DP, pct=Math.max(0,Math.min(100, dp.target? dp.balance/dp.target*100:0));
-  const cm=S.currentMonth, mname=S.months[cm];
-  const months = dp.months==='✓'?'objetivo atingido':`faltam ~${dp.months} meses`;
-  return `<div class="pg">${header()}
+  const ca=S.casa, j=S.joint;
+  if(!ca){ return `<div class="pg">${header()}<div class="err-msg">Falta criar as tabs. No Apps Script corre <b>setupTudo</b> uma vez e recarrega.</div></div>`; }
+  const potPct=ca.target?ca.potReceived/ca.target*100:0, gap=Math.max(0,ca.target-ca.potReceived), projGap=Math.max(0,ca.target-ca.potProjected);
+  const fechado=/fechad/i.test(ca.status);
+  let h=`<div class="pg">${header()}
   <div class="dp">
-    <div class="eyebrow">Entrada da casa</div>
-    <div class="big disp">${eur(dp.balance)}<small> / ${eur(dp.target)}</small></div>
-    <div class="bar"><i style="width:${pct}%"></i></div>
-    <div class="meta">Faltam <b style="color:var(--text)">${eur(dp.remaining)}</b> · ${months} · ${eur(dp.combined)}/mês</div>
-    <div class="contrib">
-      <div class="cc"><div class="n">Bruno meteu</div><div class="v disp">${eur(dp.bd)}</div></div>
-      <div class="cc"><div class="n">Laura meteu</div><div class="v disp">${eur(dp.ar)}</div></div>
-    </div>
+    <div class="row"><div class="eyebrow">Bolo da casa</div><span class="badge ${fechado?'done':'live'}">${ca.status}</span></div>
+    <div class="big disp">${eur(ca.potReceived)}<small> / ${eur(ca.target)}</small></div>${bar(potPct)}
+    <div class="meta">Para fechar faltam <b style="color:var(--text)">${eur(gap)}</b>. ${projGap<=0?'<b style="color:var(--accent)">Com o prometido, coberto ✓</b>':`Com o prometido, faltariam ${eur(projGap)}.`}</div>
   </div>
-
-  <p class="lb mt">${mname} — transferências</p>
-  <div class="kpi">
-    <div class="b"><div class="n">Bruno</div><div class="v disp">${eur(S.confirmedBD[cm])} <span class="done ${S.doneBD[cm]==='✓'?'y':'n'}" style="font-size:16px">${S.doneBD[cm]==='✓'?'✓ ok':'em falta'}</span></div></div>
-    <div class="b"><div class="n">Laura</div><div class="v disp">${eur(S.confirmedAR[cm])} <span class="done ${S.doneAR[cm]==='✓'?'y':'n'}" style="font-size:16px">${S.doneAR[cm]==='✓'?'✓ ok':'em falta'}</span></div></div>
-  </div>
-  <button class="cta" onclick="MI=${cm};go('transfers')">Registar transferências →</button>
-  </div>`;
-}
-
-function vTransfers(){
-  const col=4+MI;
-  const person=(title,sub,list,confirmed,done,who)=>{
-    let r=`<div class="pcard"><div class="ph"><span class="pn">${title}</span><span class="done ${done==='✓'?'y':'n'}">${done==='✓'?'✓ completo':'em falta'}</span></div><div class="pc">${sub} · ${eur(confirmed)} confirmados</div>`;
-    list.forEach((t,i)=>{ const on=t.ticks[MI];
-      r+=`<div class="tr"><div><div class="tl">${t.label}</div><div class="ta">${eur(t.amount)}</div></div>
-        <div class="sw ${on?'on':''} ${BUSY?'busy':''}" onclick="toggle(S.${who}[${i}],'${who==='bd'?'BD':'AR'}')"><i></i></div></div>`;});
-    return r+`</div>`;
-  };
-  let h=`<div class="pg">${header()}<h1 class="pgh disp">Transferências</h1>
-  <div class="months">`;
-  S.months.forEach((m,i)=>{ h+=`<button class="mp ${i===MI?'on':''}" onclick="MI=${i};render()">${m}</button>`; });
-  h+=`</div>`;
-  h+=person('Bruno','do BDaib', S.bd, S.confirmedBD[MI], S.doneBD[MI], 'bd');
-  h+=person('Laura','do ARaib / ARrev', S.ar, S.confirmedAR[MI], S.doneAR[MI], 'ar');
-  h+=`<p class="muted" style="text-align:center;margin-top:8px">Toca para marcar uma transferência como feita. Guarda na folha automaticamente.</p></div>`;
-  return h;
-}
-
-function vAcertos(){
-  const ac=S.acertos, t=ac.totals, paid=Math.max(0,t.orig-t.remaining), pct=t.orig?paid/t.orig*100:0;
-  const mtxt = t.months==='✓'?'tudo saldado':`faltam ~${t.months} meses`;
-  let h=`<div class="pg">${header()}<h1 class="pgh disp">Acertos</h1>
+  <p class="lb mt">Contribuição líquida · alvo ${eur(ca.per)} cada</p>
   <div class="card">
-    <div class="row"><span class="lb" style="margin:0">Em falta</span><span class="muted">${eur(t.permonth)}/mês · ${mtxt}</span></div>
-    <div class="big disp" style="font-size:36px;margin:6px 0 0">${eur(t.remaining)}</div>
-    <div class="bar"><i style="width:${pct}%"></i></div>
-    <div class="muted">Pago ${eur(paid)} de ${eur(t.orig)}</div>
-    <div class="btns"><button class="pri" onclick="MODAL=mPayment;render()">+ Registar pagamento</button><button onclick="MODAL=mDebt;render()">+ Acerto</button></div>
-  </div>`;
-  h+=`<p class="lb mt">Em aberto</p><div class="card">`;
-  if(!ac.debts.length) h+=`<p class="muted">Sem acertos.</p>`;
-  ac.debts.forEach(d=>{ h+=`<div class="dbt"><div><div class="dl">${d.notas||(d.de+' → '+d.para)}</div><div class="dn">${d.de} → ${d.para}</div></div><div class="dv">${eur(d.orig)}</div></div>`; });
+    <div class="prow"><span class="who">Bruno</span><span class="amt">${eur(ca.bdNet)} / ${eur(ca.per)}</span></div>${bar(ca.bdNet/ca.per*100)}<div class="muted">${ca.bdRem>0?`faltam ${eur(ca.bdRem)}`:'atingiu os 35k ✓'}</div>
+    <div class="prow"><span class="who">Laura</span><span class="amt">${eur(ca.arNet)} / ${eur(ca.per)}</span></div>${bar(ca.arNet/ca.per*100)}<div class="muted">${ca.arRem>0?`faltam ${eur(ca.arRem)}`:'atingiu os 35k ✓'}</div>
+    ${ca.loanOutstanding>0?`<div class="muted" style="margin-top:12px">Próximo reembolso à família: <b style="color:var(--accent)">${ca.nextPayer}</b></div>`:''}
+    <div class="btns"><button class="pri" onclick="MODAL=mContrib;render()">+ Registar contribuição</button></div>
+  </div>
+  <p class="lb mt">De onde vem o dinheiro</p>
+  <div class="card">`;
+  ca.funds.forEach(f=>{ const ok=f.recebido>0, tag=f.tipo==='loan'?'empréstimo':'próprio';
+    const right= ok?`<span class="dv">${eur(f.recebido)}</span>`
+      :`<div style="text-align:right"><span class="muted">${eur(f.esperado)} · ${f.estado||'prometido'}</span><br><button class="mini" onclick="MODAL=()=>mReceive(${f.row},${JSON.stringify(String(f.origem)).replace(/"/g,'&quot;')},${f.esperado});render()">marcar recebido</button></div>`;
+    h+=`<div class="dbt"><div><div class="dl">${f.origem}</div><div class="dn">${f.quem==='BD'?'Bruno':f.quem==='AR'?'Laura':''} · ${tag}</div></div>${right}</div>`; });
   h+=`</div>`;
-  if(ac.log.length){ h+=`<p class="lb mt">Pagamentos</p><div class="card">`;
-    ac.log.forEach(l=>{ h+=`<div class="lg"><span>${l.date} · ${l.from}→${l.to}${l.notas?' · '+l.notas:''}</span><b>${eur(l.amount)}</b></div>`; });
-    h+=`</div>`; }
+  if(j){ h+=`<p class="lb mt">Conta conjunta · este mês</p>
+  <button class="card" style="width:100%;text-align:left;cursor:pointer;color:var(--text)" onclick="go('conjunta')">
+    <div class="row"><span class="disp" style="font-size:26px">${eur(j.totalActive)}</span><span class="muted">Bruno ${eur(j.bdShare)} · Laura ${eur(j.arShare)} →</span></div>
+  </button>`; }
   return h+`</div>`;
 }
 
-/* ===== modais ===== */
-function mPayment(){ const def=S.acertos.totals.permonth||170;
+/* ===== CONTA CONJUNTA ===== */
+function recalcJoint(){ const j=S.joint; let t=0; j.items.forEach(i=>{ if(i.ativo) t+=i.valor; }); j.totalActive=t; j.bdShare=t*j.brunoPct/100; j.arShare=t-j.bdShare; }
+async function togJoint(row,value){
+  if(BUSY) return; BUSY=true; const it=S.joint.items.find(x=>x.row===row); if(it){ it.ativo=value; recalcJoint(); } render();
+  try{ S=await api('toggleJoint',{row,value}); }catch(e){ if(it){it.ativo=!value;recalcJoint();} toast('Não guardou',true); }
+  BUSY=false; render();
+}
+function vConjunta(){
+  const j=S.joint;
+  if(!j){ return `<div class="pg">${header()}<div class="err-msg">Falta criar a tab Joint — corre setupTudo.</div></div>`; }
+  let h=`<div class="pg">${header()}<h1 class="pgh disp">Conta conjunta</h1>
+  <div class="dp">
+    <div class="eyebrow">A transferir este mês</div>
+    <div class="big disp">${eur(j.totalActive)}</div>
+    <div class="split2">
+      <div class="s"><div class="n">Bruno · ${j.brunoPct}%</div><div class="v disp">${eur(j.bdShare)}</div></div>
+      <div class="s"><div class="n">Laura · ${j.lauraPct}%</div><div class="v disp">${eur(j.arShare)}</div></div>
+    </div>
+    <div class="meta" style="margin-top:10px">de ${eur(j.totalAll)} possível · <span onclick="MODAL=mSplit;render()" style="color:var(--accent);font-weight:800;cursor:pointer">ajustar split</span></div>
+  </div>
+  <div class="card">`;
+  const order=[],gr={};
+  j.items.forEach(it=>{ const g=it.pocket||'Outros'; if(!gr[g]){gr[g]=[];order.push(g);} gr[g].push(it); });
+  order.forEach(g=>{ h+=`<div class="grp">${g}</div>`;
+    gr[g].forEach(it=>{ h+=`<div class="tr ${it.ativo?'':'off'}"><div><div class="tl">${it.desc}</div><div class="ta">dia ${it.dia} · ${eur(it.valor)}</div></div>
+      <div class="sw ${it.ativo?'on':''} ${BUSY?'busy':''}" onclick="togJoint(${it.row},${!it.ativo})"><i></i></div></div>`; }); });
+  h+=`</div><p class="muted" style="text-align:center;margin-top:8px">Desliga uma despesa para a tirar do total deste mês (ex.: Férias, Miscellaneous). Valores editam-se na folha.</p></div>`;
+  return h;
+}
+function mSplit(){
   return `<div class="overlay" onclick="if(event.target===this){MODAL=null;render()}"><div class="sheet">
-    <button class="mclose" onclick="MODAL=null;render()">×</button><h3 class="disp">Registar pagamento</h3>
-    <label class="field"><span>Quem pagou</span><div class="seg" id="p_from_seg">
-      <button class="on" onclick="selSeg('p_from','AR',this)">Laura → Bruno</button>
-      <button onclick="selSeg('p_from','BD',this)">Bruno → Laura</button></div><input type="hidden" id="p_from" value="AR"></label>
-    <label class="field"><span>Valor (€)</span><input id="p_amt" class="inp" type="number" inputmode="decimal" value="${def}"></label>
-    <label class="field"><span>Nota (opcional)</span><input id="p_notas" class="inp" placeholder="ex.: acerto mensal"></label>
-    <button class="cta" onclick="submitPayment()">Guardar pagamento</button>
-  </div></div>`; }
+    <button class="mclose" onclick="MODAL=null;render()">×</button><h3 class="disp">Ajustar split</h3>
+    <p class="muted" style="margin:-6px 0 14px">Percentagem do Bruno. A da Laura ajusta-se automaticamente.</p>
+    <label class="field"><span>Bruno (%)</span><input id="sp" class="inp" type="number" inputmode="numeric" value="${S.joint.brunoPct}" oninput="document.getElementById('spL').textContent=(100-(parseFloat(this.value)||0))"></label>
+    <p class="muted" style="margin:-6px 0 16px">Laura: <b id="spL" style="color:var(--accent)">${S.joint.lauraPct}</b>%</p>
+    <button class="cta" onclick="submitSplit()">Guardar</button>
+  </div></div>`;
+}
+async function submitSplit(){
+  const b=parseFloat(document.getElementById('sp').value);
+  if(isNaN(b)||b<0||b>100){ toast('0 a 100',true); return; }
+  MODAL=null; VIEW='loading'; render();
+  try{ S=await api('setSplit',{bruno:b}); VIEW='conjunta'; render(); toast('Split atualizado'); }
+  catch(e){ VIEW='conjunta'; render(); toast('Erro: '+e.message,true); }
+}
+
+/* ===== FAMÍLIA ===== */
+function vFamilia(){
+  const ca=S.casa; if(!ca){ return `<div class="pg">${header()}<div class="err-msg">Corre setupTudo.</div></div>`; }
+  const fechado=/fechad/i.test(ca.status);
+  let h=`<div class="pg">${header()}<h1 class="pgh disp">Família</h1>
+  <p class="lb">Empréstimos da família (irmã + tia)</p><div class="card">
+    <div class="row"><span class="lb" style="margin:0">${fechado?'Por devolver':'A entrar para fechar'}</span><span class="muted">${fechado?`próximo: ${ca.nextPayer}`:'reembolso começa após o fecho'}</span></div>
+    <div class="big disp" style="font-size:34px;margin:6px 0 0">${eur(fechado?ca.loanOutstanding:(ca.loanReceived||40000))}</div>`;
+  ca.credores.forEach(cr=>{ h+=`<div class="dbt"><div><div class="dl">${cr.credor}</div><div class="dn">${cr.montante>0?`pago ${eur(cr.pago)} de ${eur(cr.montante)}`:'ainda não recebido'}</div></div><div class="dv">${cr.montante>0?eur(cr.falta):'—'}</div></div>`; });
+  if(fechado&&ca.loanOutstanding>0){ h+=`<div class="btns"><button class="pri" onclick="MODAL=mRepay;render()">+ Registar reembolso</button></div>`; }
+  h+=`</div>`;
+  if(ca.repayLog.length){ h+=`<p class="lb mt">Reembolsos feitos</p><div class="card">`;
+    ca.repayLog.forEach(l=>{ h+=`<div class="lg"><span>${l.date} · ${l.pagador} → ${l.para}${l.notas?' · '+l.notas:''}</span><b>${eur(l.amount)}</b></div>`; }); h+=`</div>`; }
+  const ac=S.acertos, t=ac.totals;
+  h+=`<p class="lb mt">Entre nós · em pausa</p><div class="card">
+    <div class="row"><span class="lb" style="margin:0">Saldo</span><span class="muted">plano on hold</span></div>
+    <div class="big disp" style="font-size:30px;margin:6px 0 8px">${eur(t.remaining)}</div>`;
+  ac.debts.forEach(d=>{ h+=`<div class="dbt"><div><div class="dl">${d.notas||(d.de+' → '+d.para)}</div><div class="dn">${d.de} → ${d.para}</div></div><div class="dv">${eur(d.orig)}</div></div>`; });
+  h+=`<div class="btns"><button onclick="MODAL=mPayment;render()">+ Pagamento</button><button onclick="MODAL=mDebt;render()">+ Novo empréstimo</button></div>
+  <p class="muted" style="margin-top:6px">Visível para não esquecer; retoma-se quando fizer sentido.</p></div>`;
+  return h+`</div>`;
+}
+
+/* ===== DESPESAS ===== */
+function vDespesas(){
+  const dp=S.despesas; if(!dp){ return `<div class="pg">${header()}<div class="err-msg">Corre setupTudo.</div></div>`; }
+  let h=`<div class="pg">${header()}<h1 class="pgh disp">Despesas da casa</h1>
+  <div class="kpi"><div class="b"><div class="n">Já pago</div><div class="v disp">${eur(dp.totalPaid)}</div></div>
+    <div class="b"><div class="n">Por pagar</div><div class="v disp">${eur(dp.totalPending)}</div></div></div>
+  <div class="card">`;
+  if(!dp.list.length) h+=`<p class="muted">Sem despesas registadas.</p>`;
+  dp.list.forEach(e=>{ h+=`<div class="dbt"><div><div class="dl">${e.desc}</div><div class="dn">${e.pago?('pago · '+e.date):'por pagar'}${e.notas?' · '+e.notas:''}</div></div>
+    <div style="text-align:right"><span class="dv">${eur(e.valor)}</span><br><button class="mini" onclick="togExp(${e.row})">${e.pago?'marcar por pagar':'marcar pago'}</button></div></div>`; });
+  h+=`<div class="btns"><button class="pri" onclick="MODAL=mExpense;render()">+ Adicionar despesa</button></div></div></div>`;
+  return h;
+}
+async function togExp(row){ MODAL=null; VIEW='loading'; render(); try{ S=await api('toggleExpense',{row}); VIEW='despesas'; render(); }catch(e){ VIEW='despesas'; render(); toast('Erro',true);} }
+
+/* ===== modais ===== */
+function selSeg(id,val,btn){ document.getElementById(id).value=val; [...btn.parentElement.children].forEach(b=>b.classList.remove('on')); btn.classList.add('on'); }
+function mContrib(){
+  return `<div class="overlay" onclick="if(event.target===this){MODAL=null;render()}"><div class="sheet">
+    <button class="mclose" onclick="MODAL=null;render()">×</button><h3 class="disp">Registar contribuição</h3>
+    <label class="field"><span>De quem</span><div class="seg"><button class="on" onclick="selSeg('c_quem','BD',this)">Bruno</button><button onclick="selSeg('c_quem','AR',this)">Laura</button></div><input type="hidden" id="c_quem" value="BD"></label>
+    <label class="field"><span>Origem</span><input id="c_origem" class="inp" placeholder="ex.: Bónus Bruno"></label>
+    <label class="field"><span>Valor (€)</span><input id="c_amt" class="inp" type="number" inputmode="decimal" placeholder="0"></label>
+    <button class="cta" onclick="submitContrib()">Guardar</button></div></div>`;
+}
+async function submitContrib(){
+  const amount=parseFloat((document.getElementById('c_amt').value||'').replace(',','.'));
+  const quem=document.getElementById('c_quem').value, origem=document.getElementById('c_origem').value;
+  if(!amount||amount<=0){ toast('Mete um valor',true); return; } if(!origem.trim()){ toast('Descreve a origem',true); return; }
+  MODAL=null; VIEW='loading'; render();
+  try{ S=await api('addContribution',{quem,origem,amount}); VIEW='home'; render(); toast('Contribuição registada 🎉'); }
+  catch(e){ VIEW='home'; render(); toast('Erro: '+e.message,true); }
+}
+function mReceive(row,origem,esperado){
+  return `<div class="overlay" onclick="if(event.target===this){MODAL=null;render()}"><div class="sheet">
+    <button class="mclose" onclick="MODAL=null;render()">×</button><h3 class="disp">${origem} — recebido</h3>
+    <p class="muted" style="margin:-6px 0 14px">Esperado: ${eur(esperado)}. Mete o valor que chegou (após câmbio/impostos).</p>
+    <label class="field"><span>Valor recebido (€)</span><input id="f_amt" class="inp" type="number" inputmode="decimal" value="${esperado}"></label>
+    <button class="cta" onclick="submitReceive(${row})">Confirmar</button></div></div>`;
+}
+async function submitReceive(row){
+  const amount=parseFloat((document.getElementById('f_amt').value||'').replace(',','.'));
+  if(!amount||amount<=0){ toast('Mete um valor',true); return; }
+  MODAL=null; VIEW='loading'; render();
+  try{ S=await api('fundReceived',{row,amount}); VIEW='home'; render(); toast('Fundo registado 🎉'); }
+  catch(e){ VIEW='home'; render(); toast('Erro: '+e.message,true); }
+}
+function mRepay(){
+  const cred=S.casa.credores.filter(c=>c.falta>0);
+  const opts=cred.map((c,i)=>`<button class="${i===0?'on':''}" onclick="selSeg('r_para','${c.credor}',this)">${c.credor}</button>`).join('')||'<button class="on">—</button>';
+  const first=(cred[0]||{}).credor||''; const np=S.casa.nextPayer;
+  return `<div class="overlay" onclick="if(event.target===this){MODAL=null;render()}"><div class="sheet">
+    <button class="mclose" onclick="MODAL=null;render()">×</button><h3 class="disp">Registar reembolso</h3>
+    <label class="field"><span>A quem</span><div class="seg">${opts}</div><input type="hidden" id="r_para" value="${first}"></label>
+    <label class="field"><span>Quem pagou</span><div class="seg">
+      <button class="${np==='a meias'?'on':''}" onclick="selSeg('r_pag','a meias',this)">A meias</button>
+      <button class="${np==='Bruno'?'on':''}" onclick="selSeg('r_pag','BD',this)">Bruno</button>
+      <button class="${np==='Laura'?'on':''}" onclick="selSeg('r_pag','AR',this)">Laura</button></div>
+      <input type="hidden" id="r_pag" value="${np==='Bruno'?'BD':np==='Laura'?'AR':'a meias'}"></label>
+    <label class="field"><span>Valor (€)</span><input id="r_amt" class="inp" type="number" inputmode="decimal" placeholder="0"></label>
+    <label class="field"><span>Nota (opcional)</span><input id="r_notas" class="inp" placeholder="ex.: Wise"></label>
+    <button class="cta" onclick="submitRepay()">Guardar</button></div></div>`;
+}
+async function submitRepay(){
+  const amount=parseFloat((document.getElementById('r_amt').value||'').replace(',','.'));
+  const para=document.getElementById('r_para').value, pagador=document.getElementById('r_pag').value, notas=document.getElementById('r_notas').value;
+  if(!amount||amount<=0){ toast('Mete um valor',true); return; } if(!para){ toast('Escolhe a quem',true); return; }
+  MODAL=null; VIEW='loading'; render();
+  try{ S=await api('addRepay',{amount,para,pagador,notas}); VIEW='familia'; render(); toast('Reembolso registado'); }
+  catch(e){ VIEW='familia'; render(); toast('Erro: '+e.message,true); }
+}
+function mExpense(){
+  return `<div class="overlay" onclick="if(event.target===this){MODAL=null;render()}"><div class="sheet">
+    <button class="mclose" onclick="MODAL=null;render()">×</button><h3 class="disp">Nova despesa da casa</h3>
+    <label class="field"><span>Descrição</span><input id="e_desc" class="inp" placeholder="ex.: Solicitor"></label>
+    <label class="field"><span>Valor (€)</span><input id="e_val" class="inp" type="number" inputmode="decimal" placeholder="0"></label>
+    <label class="field"><span>Estado</span><div class="seg"><button class="on" onclick="selSeg('e_pago','',this)">Por pagar</button><button onclick="selSeg('e_pago','1',this)">Já pago</button></div><input type="hidden" id="e_pago" value=""></label>
+    <button class="cta" onclick="submitExpense()">Guardar</button></div></div>`;
+}
+async function submitExpense(){
+  const valor=parseFloat((document.getElementById('e_val').value||'').replace(',','.'));
+  const desc=document.getElementById('e_desc').value, pago=document.getElementById('e_pago').value==='1';
+  if(!desc.trim()){ toast('Descreve a despesa',true); return; } if(!valor||valor<=0){ toast('Mete um valor',true); return; }
+  MODAL=null; VIEW='loading'; render();
+  try{ S=await api('addExpense',{desc,valor,pago}); VIEW='despesas'; render(); toast('Despesa registada'); }
+  catch(e){ VIEW='despesas'; render(); toast('Erro: '+e.message,true); }
+}
+function mPayment(){
+  return `<div class="overlay" onclick="if(event.target===this){MODAL=null;render()}"><div class="sheet">
+    <button class="mclose" onclick="MODAL=null;render()">×</button><h3 class="disp">Pagamento (entre nós)</h3>
+    <label class="field"><span>Quem pagou</span><div class="seg"><button class="on" onclick="selSeg('p_from','AR',this)">Laura → Bruno</button><button onclick="selSeg('p_from','BD',this)">Bruno → Laura</button></div><input type="hidden" id="p_from" value="AR"></label>
+    <label class="field"><span>Valor (€)</span><input id="p_amt" class="inp" type="number" inputmode="decimal" placeholder="0"></label>
+    <label class="field"><span>Nota (opcional)</span><input id="p_notas" class="inp" placeholder="ex.: acerto"></label>
+    <button class="cta" onclick="submitPayment()">Guardar</button></div></div>`;
+}
+async function submitPayment(){
+  const amount=parseFloat((document.getElementById('p_amt').value||'').replace(',','.'));
+  const from=document.getElementById('p_from').value, notas=document.getElementById('p_notas').value;
+  if(!amount||amount<=0){ toast('Mete um valor',true); return; }
+  MODAL=null; VIEW='loading'; render();
+  try{ S=await api('addPayment',{amount,from,to:from==='AR'?'BD':'AR',notas}); VIEW='familia'; render(); toast('Pagamento registado'); }
+  catch(e){ VIEW='familia'; render(); toast('Erro: '+e.message,true); }
+}
 function mDebt(){
   return `<div class="overlay" onclick="if(event.target===this){MODAL=null;render()}"><div class="sheet">
-    <button class="mclose" onclick="MODAL=null;render()">×</button><h3 class="disp">Novo acerto</h3>
-    <label class="field"><span>Quem deve a quem</span><div class="seg">
-      <button class="on" onclick="selSeg('d_de','BD',this)">Bruno deve à Laura</button>
-      <button onclick="selSeg('d_de','AR',this)">Laura deve ao Bruno</button></div><input type="hidden" id="d_de" value="BD"></label>
+    <button class="mclose" onclick="MODAL=null;render()">×</button><h3 class="disp">Novo empréstimo (entre nós)</h3>
+    <label class="field"><span>Quem deve a quem</span><div class="seg"><button class="on" onclick="selSeg('d_de','AR',this)">Laura deve ao Bruno</button><button onclick="selSeg('d_de','BD',this)">Bruno deve à Laura</button></div><input type="hidden" id="d_de" value="AR"></label>
     <label class="field"><span>Valor (€)</span><input id="d_orig" class="inp" type="number" inputmode="decimal" placeholder="0"></label>
     <label class="field"><span>Descrição</span><input id="d_notas" class="inp" placeholder="ex.: jantar + portagens"></label>
-    <button class="cta" onclick="submitDebt()">Adicionar acerto</button>
-  </div></div>`; }
-function selSeg(id,val,btn){ document.getElementById(id).value=val; [...btn.parentElement.children].forEach(b=>b.classList.remove('on')); btn.classList.add('on'); }
+    <button class="cta" onclick="submitDebt()">Adicionar</button></div></div>`;
+}
+async function submitDebt(){
+  const orig=parseFloat((document.getElementById('d_orig').value||'').replace(',','.'));
+  const de=document.getElementById('d_de').value, notas=document.getElementById('d_notas').value;
+  if(!orig||orig<=0){ toast('Mete um valor',true); return; } if(!notas.trim()){ toast('Descreve',true); return; }
+  MODAL=null; VIEW='loading'; render();
+  try{ S=await api('addDebt',{orig,de,para:de==='BD'?'AR':'BD',notas}); VIEW='familia'; render(); toast('Registado'); }
+  catch(e){ VIEW='familia'; render(); toast('Erro: '+e.message,true); }
+}
 
 /* ===== nav ===== */
 function nav(){
   const ic={home:'<path d="M3 11l9-8 9 8M5 10v10h5v-6h4v6h5V10"/>',
-    transfers:'<path d="M7 7h11l-3-3M17 17H6l3 3"/>',
-    acertos:'<path d="M12 1v22M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"/>'};
+    conjunta:'<rect x="2" y="5" width="20" height="14" rx="2"/><path d="M2 10h20M7 15h4"/>',
+    familia:'<path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2M23 21v-2a4 4 0 0 0-3-3.87M16 3.13a4 4 0 0 1 0 7.75"/><circle cx="9" cy="7" r="4"/>',
+    despesas:'<path d="M4 2v20l3-2 3 2 3-2 3 2 3-2 2 2V2H4zM8 7h8M8 11h8M8 15h5"/>'};
   const item=(v,lbl)=>`<button class="${VIEW===v?'on':''}" onclick="go('${v}')"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">${ic[v]}</svg><span>${lbl}</span></button>`;
-  return `<div class="nav">${item('home','Início')}${item('transfers','Transferências')}${item('acertos','Acertos')}</div>`;
+  return `<div class="nav">${item('home','Início')}${item('conjunta','Conjunta')}${item('familia','Família')}${item('despesas','Despesas')}</div>`;
 }
-
 boot();
 </script>
 </body>
