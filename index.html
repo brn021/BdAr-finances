@@ -35,16 +35,11 @@ h1.pgh{font-size:26px;margin:0 0 16px}
 .dp .meta{font-size:13px;color:var(--muted)}
 .badge{display:inline-block;font-size:11px;font-weight:800;padding:3px 9px;border-radius:20px;text-transform:uppercase;letter-spacing:.05em}
 .badge.live{background:rgba(232,130,78,.16);color:var(--accent)}
-.badge.done{background:rgba(88,166,255,.16);color:var(--blue)}
 .card{background:var(--card);border:1px solid var(--line);border-radius:16px;padding:18px;margin-bottom:12px}
 .row{display:flex;justify-content:space-between;align-items:center}
 .prow{display:flex;justify-content:space-between;align-items:baseline;font-size:14.5px;font-weight:700;margin:14px 0 0}
 .prow .who{font-size:15px}.prow .amt{color:var(--accent)}
 .sub{font-size:12.5px;color:var(--muted);font-weight:600}
-.kpi{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:12px}
-.kpi .b{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:14px}
-.kpi .b .n{font-size:11.5px;color:var(--muted);font-weight:700;text-transform:uppercase;letter-spacing:.05em}
-.kpi .b .v{font-size:24px;line-height:1;margin-top:6px}
 .split2{display:flex;gap:18px;margin-top:10px}
 .split2 .s .n{font-size:12px;color:var(--muted);font-weight:700}
 .split2 .s .v{font-size:20px;color:var(--accent);margin-top:2px}
@@ -60,13 +55,15 @@ h1.pgh{font-size:26px;margin:0 0 16px}
 .sw.on{background:var(--accent);border-color:var(--accent)}
 .sw.on i{left:25px;background:var(--ink)}
 .sw.busy{opacity:.5}
+.chk{flex-shrink:0;width:30px;height:30px;border-radius:9px;background:#0c0e12;border:1.5px solid var(--dim);position:relative;cursor:pointer;transition:.15s}
+.chk.on{background:var(--accent);border-color:var(--accent)}
+.chk.on::after{content:'';position:absolute;left:10px;top:5px;width:7px;height:13px;border:solid var(--ink);border-width:0 3px 3px 0;transform:rotate(45deg)}
+.chk.busy{opacity:.5}
 .dbt{display:flex;justify-content:space-between;gap:10px;align-items:flex-start;padding:11px 0;border-top:1px solid var(--line)}
 .dbt:first-child{border-top:none}
 .dbt .dl{font-size:14px}.dbt .dn{font-size:12px;color:var(--muted);margin-top:2px}
 .dbt .dv{font-weight:800;color:var(--accent);white-space:nowrap}
 .mini{background:rgba(232,130,78,.14);border:1px solid rgba(232,130,78,.4);color:var(--accent);border-radius:8px;padding:5px 10px;font-size:12px;font-weight:800;cursor:pointer;font-family:inherit;margin-top:4px}
-.lg{display:flex;justify-content:space-between;gap:10px;font-size:13px;padding:8px 0;border-top:1px solid var(--card2);color:var(--muted)}
-.lg b{color:var(--text)}
 .btns{display:flex;gap:8px;margin:14px 0 4px;flex-wrap:wrap}
 .btns button{flex:1;min-width:130px;border-radius:12px;padding:13px;font-weight:800;font-size:14px;cursor:pointer;font-family:inherit;border:1px solid var(--line);background:var(--card2);color:var(--text)}
 .btns button.pri{background:var(--accent);color:var(--ink);border:none}
@@ -94,12 +91,13 @@ h1.pgh{font-size:26px;margin:0 0 16px}
 @keyframes fo{0%,72%{opacity:1}100%{opacity:0}}
 .err-msg{background:rgba(255,77,77,.12);border:1px solid rgba(255,77,77,.4);color:#ff9c9c;padding:12px 14px;border-radius:10px;font-size:13.5px;margin-bottom:14px;line-height:1.45}
 .muted{color:var(--muted);font-size:13px}
+.pill{display:inline-flex;align-items:center;gap:6px;background:var(--card2);border:1px solid var(--line);border-radius:20px;padding:5px 12px;font-size:12.5px;font-weight:700;color:var(--muted)}
 </style>
 </head>
 <body>
 <div id="app"></div>
 <script>
-const BAKED_URL = "https://script.google.com/macros/s/AKfycbxBxN6_3wdWv2pdCtIQq6o2TH8A0hj2E7KCrqdUhkV6RI6sXW1Caxf9Iz2D38tVQl_6/exec";
+const BAKED_URL = "https://script.google.com/macros/s/AKfycbzayIZsncTqmOfGxqFGVf__qydaHwpDKFlMGbeHoQJurpkK8Hd5uxqXEe-sHJrMpBUz/exec";
 let API = localStorage.getItem('fin_api') || BAKED_URL || "";
 let PW  = localStorage.getItem('fin_pw')  || "";
 let S=null, VIEW='home', TT=null, MODAL=null, BUSY=false;
@@ -123,7 +121,6 @@ async function boot(){
 }
 function logout(){ localStorage.removeItem('fin_pw'); PW=''; S=null; VIEW='setup'; render(); }
 
-/* ===== render ===== */
 function render(){
   const a=$();
   if(VIEW==='setup'){ a.innerHTML=vSetup(); return; }
@@ -132,8 +129,8 @@ function render(){
   let h='';
   if(VIEW==='home') h=vHome();
   if(VIEW==='conjunta') h=vConjunta();
-  if(VIEW==='familia') h=vFamilia();
-  if(VIEW==='despesas') h=vDespesas();
+  if(VIEW==='guia') h=vGuia();
+  if(VIEW==='pessoal') h=vPessoal();
   a.innerHTML=h+nav()+(MODAL?MODAL():'')+tt();
 }
 function tt(){ return TT?`<div class="toast ${TT.err?'err':''}">${TT.msg}</div>`:''; }
@@ -159,76 +156,67 @@ function saveSetup(){
     .catch(e=>{ VIEW='setup'; render(); toast(e.auth?'Password errada':'Não consegui ligar',true); });
 }
 
-/* ===== INÍCIO (Casa) ===== */
+/* ===== INÍCIO ===== */
+function fundCol(f){ if(f.external>0 || /loan|empr|sister|aunt|irm|tia/i.test(f.source)) return 'external'; if(f.laura>0 || /laura|dad|pai/i.test(f.source)) return 'laura'; return 'bruno'; }
+function fundVal(f){ return f.bruno+f.laura+f.external; }
 function vHome(){
-  const ca=S.casa, j=S.joint;
-  if(!ca){ return `<div class="pg">${header()}<div class="err-msg">Falta criar as tabs. No Apps Script corre <b>setupTudo</b> uma vez e recarrega.</div></div>`; }
-  const potPct=ca.target?ca.potReceived/ca.target*100:0, gap=Math.max(0,ca.target-ca.potReceived), projGap=Math.max(0,ca.target-ca.potProjected);
-  const fechado=/fechad/i.test(ca.status);
+  const c=S.contrib;
+  if(!c){ return `<div class="pg">${header()}<div class="err-msg">Falta criar as tabs. Corre setupTudo e recarrega.</div></div>`; }
+  const pct=c.target?c.total/c.target*100:0, gap=Math.max(0,c.target-c.total);
   let h=`<div class="pg">${header()}
   <div class="dp">
-    <div class="row"><div class="eyebrow">Bolo da casa</div><span class="badge ${fechado?'done':'live'}">${ca.status}</span></div>
-    <div class="big disp">${eur(ca.potReceived)}<small> / ${eur(ca.target)}</small></div>${bar(potPct)}
-    <div class="meta">Para fechar faltam <b style="color:var(--text)">${eur(gap)}</b>. ${projGap<=0?'<b style="color:var(--accent)">Com o prometido, coberto ✓</b>':`Com o prometido, faltariam ${eur(projGap)}.`}</div>
+    <div class="row"><div class="eyebrow">Bolo da casa</div><span class="badge live">em curso</span></div>
+    <div class="big disp">${eur(c.total)}<small> / ${eur(c.target)}</small></div>${bar(pct)}
+    <div class="meta">Faltam <b style="color:var(--text)">${eur(gap)}</b> · ${Math.round(pct)}% do alvo</div>
+    <div class="split2"><div class="s"><div class="n">Bruno</div><div class="v disp">${eur(c.bd)}</div></div>
+      <div class="s"><div class="n">Laura</div><div class="v disp">${eur(c.ar)}</div></div>
+      <div class="s"><div class="n">Externa</div><div class="v disp">${eur(c.ext)}</div></div></div>
   </div>
-  <p class="lb mt">Contribuição líquida · alvo ${eur(ca.per)} cada</p>
-  <div class="card">
-    <div class="prow"><span class="who">Bruno</span><span class="amt">${eur(ca.bdNet)} / ${eur(ca.per)}</span></div>${bar(ca.bdNet/ca.per*100)}<div class="muted">${ca.bdRem>0?`faltam ${eur(ca.bdRem)}`:'atingiu os 35k ✓'}</div>
-    <div class="prow"><span class="who">Laura</span><span class="amt">${eur(ca.arNet)} / ${eur(ca.per)}</span></div>${bar(ca.arNet/ca.per*100)}<div class="muted">${ca.arRem>0?`faltam ${eur(ca.arRem)}`:'atingiu os 35k ✓'}</div>
-    ${ca.loanOutstanding>0?`<div class="muted" style="margin-top:12px">Próximo reembolso à família: <b style="color:var(--accent)">${ca.nextPayer}</b></div>`:''}
-    <div class="btns"><button class="pri" onclick="MODAL=mContrib;render()">+ Registar contribuição</button></div>
-  </div>
-  <p class="lb mt">De onde vem o dinheiro</p>
-  <div class="card">`;
-  ca.funds.forEach(f=>{ const ok=f.recebido>0, tag=f.tipo==='loan'?'empréstimo':'próprio';
-    const right= ok?`<span class="dv">${eur(f.recebido)}</span>`
-      :`<div style="text-align:right"><span class="muted">${eur(f.esperado)} · ${f.estado||'prometido'}</span><br><button class="mini" onclick="MODAL=()=>mReceive(${f.row},${JSON.stringify(String(f.origem)).replace(/"/g,'&quot;')},${f.esperado});render()">marcar recebido</button></div>`;
-    h+=`<div class="dbt"><div><div class="dl">${f.origem}</div><div class="dn">${f.quem==='BD'?'Bruno':f.quem==='AR'?'Laura':''} · ${tag}</div></div>${right}</div>`; });
+  <p class="lb mt">De onde vem</p><div class="card">`;
+  c.funds.forEach(f=>{ const v=fundVal(f), got=v>0;
+    const right = got?`<span class="dv">${eur(v)}</span>`
+      :`<div style="text-align:right"><span class="muted">${f.notes||'por chegar'}</span><br><button class="mini" onclick="MODAL=()=>mReceive(${f.row},'${fundCol(f)}',${JSON.stringify(String(f.source)).replace(/"/g,'&quot;')});render()">marcar recebido</button></div>`;
+    h+=`<div class="dbt"><div><div class="dl">${f.source}</div><div class="dn">${f.notes&&got?f.notes:(got?'recebido':'')}</div></div>${right}</div>`; });
   h+=`</div>`;
+  if(c.costs && c.costs.length){ h+=`<p class="lb mt">Custos já pagos</p><div class="card"><div class="row"><span class="muted">Total</span><span class="disp" style="font-size:20px">${eur(c.costTotal)}</span></div></div>`; }
+  const j=S.joint;
   if(j){ h+=`<p class="lb mt">Conta conjunta · este mês</p>
   <button class="card" style="width:100%;text-align:left;cursor:pointer;color:var(--text)" onclick="go('conjunta')">
-    <div class="row"><span class="disp" style="font-size:26px">${eur(j.totalActive)}</span><span class="muted">Bruno ${eur(j.bdShare)} · Laura ${eur(j.arShare)} →</span></div>
-  </button>`; }
+    <div class="row"><span class="disp" style="font-size:26px">${eur(j.totalActive)}</span><span class="muted">Bruno ${eur(j.bdShare)} · Laura ${eur(j.arShare)} →</span></div></button>`; }
   return h+`</div>`;
 }
 
-/* ===== CONTA CONJUNTA ===== */
+/* ===== CONJUNTA ===== */
 function recalcJoint(){ const j=S.joint; let t=0; j.items.forEach(i=>{ if(i.ativo) t+=i.valor; }); j.totalActive=t; j.bdShare=t*j.brunoPct/100; j.arShare=t-j.bdShare; }
 async function togJoint(row,value){
   if(BUSY) return; BUSY=true; const it=S.joint.items.find(x=>x.row===row); if(it){ it.ativo=value; recalcJoint(); } render();
-  try{ S=await api('toggleJoint',{row,value}); }catch(e){ if(it){it.ativo=!value;recalcJoint();} toast('Não guardou',true); }
+  try{ S=await api('toggle',{tab:'Joint',row,value}); }catch(e){ if(it){it.ativo=!value;recalcJoint();} toast('Não guardou',true); }
   BUSY=false; render();
 }
 function vConjunta(){
   const j=S.joint;
-  if(!j){ return `<div class="pg">${header()}<div class="err-msg">Falta criar a tab Joint — corre setupTudo.</div></div>`; }
+  if(!j){ return `<div class="pg">${header()}<div class="err-msg">Falta a tab Joint — corre setupTudo.</div></div>`; }
   let h=`<div class="pg">${header()}<h1 class="pgh disp">Conta conjunta</h1>
-  <div class="dp">
-    <div class="eyebrow">A transferir este mês</div>
-    <div class="big disp">${eur(j.totalActive)}</div>
-    <div class="split2">
-      <div class="s"><div class="n">Bruno · ${j.brunoPct}%</div><div class="v disp">${eur(j.bdShare)}</div></div>
-      <div class="s"><div class="n">Laura · ${j.lauraPct}%</div><div class="v disp">${eur(j.arShare)}</div></div>
-    </div>
+  <div class="dp"><div class="eyebrow">A transferir este mês</div><div class="big disp">${eur(j.totalActive)}</div>
+    <div class="split2"><div class="s"><div class="n">Bruno · ${j.brunoPct}%</div><div class="v disp">${eur(j.bdShare)}</div></div>
+      <div class="s"><div class="n">Laura · ${j.lauraPct}%</div><div class="v disp">${eur(j.arShare)}</div></div></div>
     <div class="meta" style="margin-top:10px">de ${eur(j.totalAll)} possível · <span onclick="MODAL=mSplit;render()" style="color:var(--accent);font-weight:800;cursor:pointer">ajustar split</span></div>
-  </div>
-  <div class="card">`;
+  </div><div class="card">`;
   const order=[],gr={};
   j.items.forEach(it=>{ const g=it.pocket||'Outros'; if(!gr[g]){gr[g]=[];order.push(g);} gr[g].push(it); });
   order.forEach(g=>{ h+=`<div class="grp">${g}</div>`;
     gr[g].forEach(it=>{ h+=`<div class="tr ${it.ativo?'':'off'}"><div><div class="tl">${it.desc}</div><div class="ta">dia ${it.dia} · ${eur(it.valor)}</div></div>
       <div class="sw ${it.ativo?'on':''} ${BUSY?'busy':''}" onclick="togJoint(${it.row},${!it.ativo})"><i></i></div></div>`; }); });
-  h+=`</div><p class="muted" style="text-align:center;margin-top:8px">Desliga uma despesa para a tirar do total deste mês (ex.: Férias, Miscellaneous). Valores editam-se na folha.</p></div>`;
+  h+=`</div><p class="muted" style="text-align:center;margin-top:8px">Desliga o que não conta este mês. Valores editam-se na folha.</p></div>`;
   return h;
 }
 function mSplit(){
   return `<div class="overlay" onclick="if(event.target===this){MODAL=null;render()}"><div class="sheet">
     <button class="mclose" onclick="MODAL=null;render()">×</button><h3 class="disp">Ajustar split</h3>
-    <p class="muted" style="margin:-6px 0 14px">Percentagem do Bruno. A da Laura ajusta-se automaticamente.</p>
+    <p class="muted" style="margin:-6px 0 14px">% do Bruno. A da Laura ajusta-se sozinha.</p>
     <label class="field"><span>Bruno (%)</span><input id="sp" class="inp" type="number" inputmode="numeric" value="${S.joint.brunoPct}" oninput="document.getElementById('spL').textContent=(100-(parseFloat(this.value)||0))"></label>
     <p class="muted" style="margin:-6px 0 16px">Laura: <b id="spL" style="color:var(--accent)">${S.joint.lauraPct}</b>%</p>
-    <button class="cta" onclick="submitSplit()">Guardar</button>
-  </div></div>`;
+    <button class="cta" onclick="submitSplit()">Guardar</button></div></div>`;
 }
 async function submitSplit(){
   const b=parseFloat(document.getElementById('sp').value);
@@ -238,157 +226,86 @@ async function submitSplit(){
   catch(e){ VIEW='conjunta'; render(); toast('Erro: '+e.message,true); }
 }
 
-/* ===== FAMÍLIA ===== */
-function vFamilia(){
-  const ca=S.casa; if(!ca){ return `<div class="pg">${header()}<div class="err-msg">Corre setupTudo.</div></div>`; }
-  const fechado=/fechad/i.test(ca.status);
-  let h=`<div class="pg">${header()}<h1 class="pgh disp">Família</h1>
-  <p class="lb">Empréstimos da família (irmã + tia)</p><div class="card">
-    <div class="row"><span class="lb" style="margin:0">${fechado?'Por devolver':'A entrar para fechar'}</span><span class="muted">${fechado?`próximo: ${ca.nextPayer}`:'reembolso começa após o fecho'}</span></div>
-    <div class="big disp" style="font-size:34px;margin:6px 0 0">${eur(fechado?ca.loanOutstanding:(ca.loanReceived||40000))}</div>`;
-  ca.credores.forEach(cr=>{ h+=`<div class="dbt"><div><div class="dl">${cr.credor}</div><div class="dn">${cr.montante>0?`pago ${eur(cr.pago)} de ${eur(cr.montante)}`:'ainda não recebido'}</div></div><div class="dv">${cr.montante>0?eur(cr.falta):'—'}</div></div>`; });
-  if(fechado&&ca.loanOutstanding>0){ h+=`<div class="btns"><button class="pri" onclick="MODAL=mRepay;render()">+ Registar reembolso</button></div>`; }
-  h+=`</div>`;
-  if(ca.repayLog.length){ h+=`<p class="lb mt">Reembolsos feitos</p><div class="card">`;
-    ca.repayLog.forEach(l=>{ h+=`<div class="lg"><span>${l.date} · ${l.pagador} → ${l.para}${l.notas?' · '+l.notas:''}</span><b>${eur(l.amount)}</b></div>`; }); h+=`</div>`; }
-  const ac=S.acertos, t=ac.totals;
-  h+=`<p class="lb mt">Entre nós · em pausa</p><div class="card">
-    <div class="row"><span class="lb" style="margin:0">Saldo</span><span class="muted">plano on hold</span></div>
-    <div class="big disp" style="font-size:30px;margin:6px 0 8px">${eur(t.remaining)}</div>`;
-  ac.debts.forEach(d=>{ h+=`<div class="dbt"><div><div class="dl">${d.notas||(d.de+' → '+d.para)}</div><div class="dn">${d.de} → ${d.para}</div></div><div class="dv">${eur(d.orig)}</div></div>`; });
-  h+=`<div class="btns"><button onclick="MODAL=mPayment;render()">+ Pagamento</button><button onclick="MODAL=mDebt;render()">+ Novo empréstimo</button></div>
-  <p class="muted" style="margin-top:6px">Visível para não esquecer; retoma-se quando fizer sentido.</p></div>`;
+/* ===== GUIA ===== */
+function isDone(who,item){ return S.log && S.log.some(e=>e.thisMonth && e.who===who && e.item===item); }
+async function togDone(who,item,amount){
+  if(BUSY) return; BUSY=true; render();
+  try{ S=await api('logToggle',{quem:who,item:item,amount:amount}); }catch(e){ toast('Não guardou',true); }
+  BUSY=false; render();
+}
+function vGuia(){
+  const people=[['Bruno',S.bruno],['Laura',S.laura]];
+  let h=`<div class="pg">${header()}<h1 class="pgh disp">Guia mensal</h1>`;
+  let totalToDo=0, done=0;
+  people.forEach(([who,b])=>{ if(!b) return;
+    const trs=b.lines.filter(l=>l.kind==='transfer'&&l.ativo&&l.valor>0);
+    if(!trs.length) return;
+    h+=`<p class="lb mt">${who}</p><div class="card">`;
+    trs.forEach(l=>{ const d=isDone(who,l.label); totalToDo++; if(d) done++;
+      h+=`<div class="tr"><div><div class="tl">${l.label}</div><div class="ta">${eur(l.valor)}</div></div>
+        <div class="chk ${d?'on':''} ${BUSY?'busy':''}" onclick="togDone('${who}',${JSON.stringify(l.label).replace(/"/g,'&quot;')},${l.valor})"></div></div>`; });
+    h+=`</div>`;
+  });
+  const headTxt = totalToDo?`${done}/${totalToDo} feitas este mês`:'sem transferências ativas';
+  h=h.replace('<h1 class="pgh disp">Guia mensal</h1>', `<h1 class="pgh disp">Guia mensal</h1><p class="muted" style="margin:-8px 0 14px">${headTxt}</p>`);
+  h+=`<p class="muted" style="text-align:center;margin-top:8px">Toca para marcar como feita. Fica registada no Log e mantém-se este mês.</p></div>`;
+  return h;
+}
+
+/* ===== PESSOAL ===== */
+async function togBudget(who,row,value){
+  if(BUSY) return; BUSY=true;
+  const b=who==='Bruno'?S.bruno:S.laura; const ln=b.lines.find(x=>x.row===row);
+  if(ln){ ln.ativo=value; b.activeTotal=b.lines.filter(l=>l.kind==='transfer'&&l.ativo).reduce((s,l)=>s+l.valor,0); }
+  render();
+  try{ S=await api('toggle',{tab:who,row,value}); }catch(e){ if(ln)ln.ativo=!value; toast('Não guardou',true); }
+  BUSY=false; render();
+}
+function budgetCard(who,b){
+  if(!b) return '';
+  const trs=b.lines.filter(l=>l.kind==='transfer'), pks=b.lines.filter(l=>l.kind==='pocket');
+  let h=`<p class="lb mt">${who} · income ${eur(b.income)}</p><div class="card">`;
+  h+=`<div class="grp">Transferências</div>`;
+  trs.forEach(l=>{ const blank=!l.valor && /free|livre/i.test(l.label);
+    h+=`<div class="tr ${l.ativo?'':'off'}"><div><div class="tl">${l.label}</div><div class="ta">${l.valor?eur(l.valor):'—'}</div></div>
+      <div class="sw ${l.ativo?'on':''} ${BUSY?'busy':''}" onclick="togBudget('${who}',${l.row},${!l.ativo})"><i></i></div></div>`; });
+  if(pks.length){ h+=`<div class="grp">Pockets</div>`;
+    pks.forEach(l=>{ h+=`<div class="tr ${l.ativo?'':'off'}"><div><div class="tl">${l.label}</div><div class="ta">${l.valor?eur(l.valor):'—'}</div></div>
+      <div class="sw ${l.ativo?'on':''} ${BUSY?'busy':''}" onclick="togBudget('${who}',${l.row},${!l.ativo})"><i></i></div></div>`; }); }
+  h+=`<div class="prow" style="border-top:1px solid var(--line);padding-top:12px;margin-top:12px"><span class="who">Total transferências ativas</span><span class="amt">${eur(b.activeTotal)}</span></div>`;
+  return h+`</div>`;
+}
+function vPessoal(){
+  let h=`<div class="pg">${header()}<h1 class="pgh disp">Pessoal</h1>
+  <p class="muted" style="margin:-8px 0 14px">Desliga o que quiseres pausar (ex.: para reforçar a casa).</p>`;
+  h+=budgetCard('Bruno',S.bruno)+budgetCard('Laura',S.laura);
   return h+`</div>`;
 }
 
-/* ===== DESPESAS ===== */
-function vDespesas(){
-  const dp=S.despesas; if(!dp){ return `<div class="pg">${header()}<div class="err-msg">Corre setupTudo.</div></div>`; }
-  let h=`<div class="pg">${header()}<h1 class="pgh disp">Despesas da casa</h1>
-  <div class="kpi"><div class="b"><div class="n">Já pago</div><div class="v disp">${eur(dp.totalPaid)}</div></div>
-    <div class="b"><div class="n">Por pagar</div><div class="v disp">${eur(dp.totalPending)}</div></div></div>
-  <div class="card">`;
-  if(!dp.list.length) h+=`<p class="muted">Sem despesas registadas.</p>`;
-  dp.list.forEach(e=>{ h+=`<div class="dbt"><div><div class="dl">${e.desc}</div><div class="dn">${e.pago?('pago · '+e.date):'por pagar'}${e.notas?' · '+e.notas:''}</div></div>
-    <div style="text-align:right"><span class="dv">${eur(e.valor)}</span><br><button class="mini" onclick="togExp(${e.row})">${e.pago?'marcar por pagar':'marcar pago'}</button></div></div>`; });
-  h+=`<div class="btns"><button class="pri" onclick="MODAL=mExpense;render()">+ Adicionar despesa</button></div></div></div>`;
-  return h;
-}
-async function togExp(row){ MODAL=null; VIEW='loading'; render(); try{ S=await api('toggleExpense',{row}); VIEW='despesas'; render(); }catch(e){ VIEW='despesas'; render(); toast('Erro',true);} }
-
 /* ===== modais ===== */
-function selSeg(id,val,btn){ document.getElementById(id).value=val; [...btn.parentElement.children].forEach(b=>b.classList.remove('on')); btn.classList.add('on'); }
-function mContrib(){
+function mReceive(row,col,source){
   return `<div class="overlay" onclick="if(event.target===this){MODAL=null;render()}"><div class="sheet">
-    <button class="mclose" onclick="MODAL=null;render()">×</button><h3 class="disp">Registar contribuição</h3>
-    <label class="field"><span>De quem</span><div class="seg"><button class="on" onclick="selSeg('c_quem','BD',this)">Bruno</button><button onclick="selSeg('c_quem','AR',this)">Laura</button></div><input type="hidden" id="c_quem" value="BD"></label>
-    <label class="field"><span>Origem</span><input id="c_origem" class="inp" placeholder="ex.: Bónus Bruno"></label>
-    <label class="field"><span>Valor (€)</span><input id="c_amt" class="inp" type="number" inputmode="decimal" placeholder="0"></label>
-    <button class="cta" onclick="submitContrib()">Guardar</button></div></div>`;
+    <button class="mclose" onclick="MODAL=null;render()">×</button><h3 class="disp">${source} — recebido</h3>
+    <p class="muted" style="margin:-6px 0 14px">Mete o valor que entrou (após câmbio/impostos, se aplicável).</p>
+    <label class="field"><span>Valor (€)</span><input id="f_amt" class="inp" type="number" inputmode="decimal" placeholder="0"></label>
+    <button class="cta" onclick="submitReceive(${row},'${col}')">Confirmar</button></div></div>`;
 }
-async function submitContrib(){
-  const amount=parseFloat((document.getElementById('c_amt').value||'').replace(',','.'));
-  const quem=document.getElementById('c_quem').value, origem=document.getElementById('c_origem').value;
-  if(!amount||amount<=0){ toast('Mete um valor',true); return; } if(!origem.trim()){ toast('Descreve a origem',true); return; }
-  MODAL=null; VIEW='loading'; render();
-  try{ S=await api('addContribution',{quem,origem,amount}); VIEW='home'; render(); toast('Contribuição registada 🎉'); }
-  catch(e){ VIEW='home'; render(); toast('Erro: '+e.message,true); }
-}
-function mReceive(row,origem,esperado){
-  return `<div class="overlay" onclick="if(event.target===this){MODAL=null;render()}"><div class="sheet">
-    <button class="mclose" onclick="MODAL=null;render()">×</button><h3 class="disp">${origem} — recebido</h3>
-    <p class="muted" style="margin:-6px 0 14px">Esperado: ${eur(esperado)}. Mete o valor que chegou (após câmbio/impostos).</p>
-    <label class="field"><span>Valor recebido (€)</span><input id="f_amt" class="inp" type="number" inputmode="decimal" value="${esperado}"></label>
-    <button class="cta" onclick="submitReceive(${row})">Confirmar</button></div></div>`;
-}
-async function submitReceive(row){
+async function submitReceive(row,col){
   const amount=parseFloat((document.getElementById('f_amt').value||'').replace(',','.'));
   if(!amount||amount<=0){ toast('Mete um valor',true); return; }
   MODAL=null; VIEW='loading'; render();
-  try{ S=await api('fundReceived',{row,amount}); VIEW='home'; render(); toast('Fundo registado 🎉'); }
+  try{ S=await api('contribSet',{row,col,amount}); VIEW='home'; render(); toast('Registado 🎉'); }
   catch(e){ VIEW='home'; render(); toast('Erro: '+e.message,true); }
-}
-function mRepay(){
-  const cred=S.casa.credores.filter(c=>c.falta>0);
-  const opts=cred.map((c,i)=>`<button class="${i===0?'on':''}" onclick="selSeg('r_para','${c.credor}',this)">${c.credor}</button>`).join('')||'<button class="on">—</button>';
-  const first=(cred[0]||{}).credor||''; const np=S.casa.nextPayer;
-  return `<div class="overlay" onclick="if(event.target===this){MODAL=null;render()}"><div class="sheet">
-    <button class="mclose" onclick="MODAL=null;render()">×</button><h3 class="disp">Registar reembolso</h3>
-    <label class="field"><span>A quem</span><div class="seg">${opts}</div><input type="hidden" id="r_para" value="${first}"></label>
-    <label class="field"><span>Quem pagou</span><div class="seg">
-      <button class="${np==='a meias'?'on':''}" onclick="selSeg('r_pag','a meias',this)">A meias</button>
-      <button class="${np==='Bruno'?'on':''}" onclick="selSeg('r_pag','BD',this)">Bruno</button>
-      <button class="${np==='Laura'?'on':''}" onclick="selSeg('r_pag','AR',this)">Laura</button></div>
-      <input type="hidden" id="r_pag" value="${np==='Bruno'?'BD':np==='Laura'?'AR':'a meias'}"></label>
-    <label class="field"><span>Valor (€)</span><input id="r_amt" class="inp" type="number" inputmode="decimal" placeholder="0"></label>
-    <label class="field"><span>Nota (opcional)</span><input id="r_notas" class="inp" placeholder="ex.: Wise"></label>
-    <button class="cta" onclick="submitRepay()">Guardar</button></div></div>`;
-}
-async function submitRepay(){
-  const amount=parseFloat((document.getElementById('r_amt').value||'').replace(',','.'));
-  const para=document.getElementById('r_para').value, pagador=document.getElementById('r_pag').value, notas=document.getElementById('r_notas').value;
-  if(!amount||amount<=0){ toast('Mete um valor',true); return; } if(!para){ toast('Escolhe a quem',true); return; }
-  MODAL=null; VIEW='loading'; render();
-  try{ S=await api('addRepay',{amount,para,pagador,notas}); VIEW='familia'; render(); toast('Reembolso registado'); }
-  catch(e){ VIEW='familia'; render(); toast('Erro: '+e.message,true); }
-}
-function mExpense(){
-  return `<div class="overlay" onclick="if(event.target===this){MODAL=null;render()}"><div class="sheet">
-    <button class="mclose" onclick="MODAL=null;render()">×</button><h3 class="disp">Nova despesa da casa</h3>
-    <label class="field"><span>Descrição</span><input id="e_desc" class="inp" placeholder="ex.: Solicitor"></label>
-    <label class="field"><span>Valor (€)</span><input id="e_val" class="inp" type="number" inputmode="decimal" placeholder="0"></label>
-    <label class="field"><span>Estado</span><div class="seg"><button class="on" onclick="selSeg('e_pago','',this)">Por pagar</button><button onclick="selSeg('e_pago','1',this)">Já pago</button></div><input type="hidden" id="e_pago" value=""></label>
-    <button class="cta" onclick="submitExpense()">Guardar</button></div></div>`;
-}
-async function submitExpense(){
-  const valor=parseFloat((document.getElementById('e_val').value||'').replace(',','.'));
-  const desc=document.getElementById('e_desc').value, pago=document.getElementById('e_pago').value==='1';
-  if(!desc.trim()){ toast('Descreve a despesa',true); return; } if(!valor||valor<=0){ toast('Mete um valor',true); return; }
-  MODAL=null; VIEW='loading'; render();
-  try{ S=await api('addExpense',{desc,valor,pago}); VIEW='despesas'; render(); toast('Despesa registada'); }
-  catch(e){ VIEW='despesas'; render(); toast('Erro: '+e.message,true); }
-}
-function mPayment(){
-  return `<div class="overlay" onclick="if(event.target===this){MODAL=null;render()}"><div class="sheet">
-    <button class="mclose" onclick="MODAL=null;render()">×</button><h3 class="disp">Pagamento (entre nós)</h3>
-    <label class="field"><span>Quem pagou</span><div class="seg"><button class="on" onclick="selSeg('p_from','AR',this)">Laura → Bruno</button><button onclick="selSeg('p_from','BD',this)">Bruno → Laura</button></div><input type="hidden" id="p_from" value="AR"></label>
-    <label class="field"><span>Valor (€)</span><input id="p_amt" class="inp" type="number" inputmode="decimal" placeholder="0"></label>
-    <label class="field"><span>Nota (opcional)</span><input id="p_notas" class="inp" placeholder="ex.: acerto"></label>
-    <button class="cta" onclick="submitPayment()">Guardar</button></div></div>`;
-}
-async function submitPayment(){
-  const amount=parseFloat((document.getElementById('p_amt').value||'').replace(',','.'));
-  const from=document.getElementById('p_from').value, notas=document.getElementById('p_notas').value;
-  if(!amount||amount<=0){ toast('Mete um valor',true); return; }
-  MODAL=null; VIEW='loading'; render();
-  try{ S=await api('addPayment',{amount,from,to:from==='AR'?'BD':'AR',notas}); VIEW='familia'; render(); toast('Pagamento registado'); }
-  catch(e){ VIEW='familia'; render(); toast('Erro: '+e.message,true); }
-}
-function mDebt(){
-  return `<div class="overlay" onclick="if(event.target===this){MODAL=null;render()}"><div class="sheet">
-    <button class="mclose" onclick="MODAL=null;render()">×</button><h3 class="disp">Novo empréstimo (entre nós)</h3>
-    <label class="field"><span>Quem deve a quem</span><div class="seg"><button class="on" onclick="selSeg('d_de','AR',this)">Laura deve ao Bruno</button><button onclick="selSeg('d_de','BD',this)">Bruno deve à Laura</button></div><input type="hidden" id="d_de" value="AR"></label>
-    <label class="field"><span>Valor (€)</span><input id="d_orig" class="inp" type="number" inputmode="decimal" placeholder="0"></label>
-    <label class="field"><span>Descrição</span><input id="d_notas" class="inp" placeholder="ex.: jantar + portagens"></label>
-    <button class="cta" onclick="submitDebt()">Adicionar</button></div></div>`;
-}
-async function submitDebt(){
-  const orig=parseFloat((document.getElementById('d_orig').value||'').replace(',','.'));
-  const de=document.getElementById('d_de').value, notas=document.getElementById('d_notas').value;
-  if(!orig||orig<=0){ toast('Mete um valor',true); return; } if(!notas.trim()){ toast('Descreve',true); return; }
-  MODAL=null; VIEW='loading'; render();
-  try{ S=await api('addDebt',{orig,de,para:de==='BD'?'AR':'BD',notas}); VIEW='familia'; render(); toast('Registado'); }
-  catch(e){ VIEW='familia'; render(); toast('Erro: '+e.message,true); }
 }
 
 /* ===== nav ===== */
 function nav(){
   const ic={home:'<path d="M3 11l9-8 9 8M5 10v10h5v-6h4v6h5V10"/>',
     conjunta:'<rect x="2" y="5" width="20" height="14" rx="2"/><path d="M2 10h20M7 15h4"/>',
-    familia:'<path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2M23 21v-2a4 4 0 0 0-3-3.87M16 3.13a4 4 0 0 1 0 7.75"/><circle cx="9" cy="7" r="4"/>',
-    despesas:'<path d="M4 2v20l3-2 3 2 3-2 3 2 3-2 2 2V2H4zM8 7h8M8 11h8M8 15h5"/>'};
+    guia:'<path d="M9 11l3 3L22 4M21 12v7a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11"/>',
+    pessoal:'<circle cx="12" cy="8" r="4"/><path d="M4 21v-1a6 6 0 0 1 12 0v1"/>'};
   const item=(v,lbl)=>`<button class="${VIEW===v?'on':''}" onclick="go('${v}')"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">${ic[v]}</svg><span>${lbl}</span></button>`;
-  return `<div class="nav">${item('home','Início')}${item('conjunta','Conjunta')}${item('familia','Família')}${item('despesas','Despesas')}</div>`;
+  return `<div class="nav">${item('home','Início')}${item('conjunta','Conjunta')}${item('guia','Guia')}${item('pessoal','Pessoal')}</div>`;
 }
 boot();
 </script>
