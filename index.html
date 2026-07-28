@@ -168,8 +168,8 @@ function vHome(){
     <div class="row"><div class="eyebrow">Bolo da casa</div><span class="badge live">em curso</span></div>
     <div class="big disp">${eur(c.total)}<small> / ${eur(c.target)}</small></div>${bar(pct)}
     <div class="meta">Faltam <b style="color:var(--text)">${eur(gap)}</b> · ${Math.round(pct)}% do alvo</div>
-    <div class="split2"><div class="s"><div class="n">Bruno</div><div class="v disp">${eur(c.bd)}</div></div>
-      <div class="s"><div class="n">Laura</div><div class="v disp">${eur(c.ar)}</div></div>
+    <div class="split2"><div class="s"><div class="n">Bruno</div><div class="v disp">${eur(c.brunoTotal)}</div></div>
+      <div class="s"><div class="n">Laura</div><div class="v disp">${eur(c.lauraTotal)}</div></div>
       <div class="s"><div class="n">Externa</div><div class="v disp">${eur(c.ext)}</div></div></div>
   </div>
   <p class="lb mt">De onde vem</p><div class="card">`;
@@ -177,6 +177,10 @@ function vHome(){
     const right = got?`<span class="dv">${eur(v)}</span>`
       :`<div style="text-align:right"><span class="muted">${f.notes||'por chegar'}</span><br><button class="mini" onclick="MODAL=()=>mReceive(${f.row},'${fundCol(f)}',${JSON.stringify(String(f.source)).replace(/"/g,'&quot;')});render()">marcar recebido</button></div>`;
     h+=`<div class="dbt"><div><div class="dl">${f.source}</div><div class="dn">${f.notes&&got?f.notes:(got?'recebido':'')}</div></div>${right}</div>`; });
+  const ccaib=c.ccaibBruno+c.ccaibLaura;
+  h+=`<div class="dbt"><div><div class="dl">Poupança mensal (CCaib)</div><div class="dn">${ccaib>0?`Bruno ${eur(c.ccaibBruno)} · Laura ${eur(c.ccaibLaura)}`:'marca o CCaib no Guia para acumular'}</div></div><span class="dv">${eur(ccaib)}</span></div>`;
+  if(c.extraTotal>0){ h+=`<div class="dbt"><div><div class="dl">Contribuições extra</div><div class="dn">${c.extras.length} lançamento(s)</div></div><span class="dv">${eur(c.extraTotal)}</span></div>`; }
+  h+=`<div class="btns"><button class="pri" onclick="MODAL=mExtra;render()">+ Contribuição extra</button></div>`;
   h+=`</div>`;
   if(c.costs && c.costs.length){ h+=`<p class="lb mt">Custos já pagos</p><div class="card"><div class="row"><span class="muted">Total</span><span class="disp" style="font-size:20px">${eur(c.costTotal)}</span></div></div>`; }
   const j=S.joint;
@@ -295,6 +299,24 @@ async function submitReceive(row,col){
   if(!amount||amount<=0){ toast('Mete um valor',true); return; }
   MODAL=null; VIEW='loading'; render();
   try{ S=await api('contribSet',{row,col,amount}); VIEW='home'; render(); toast('Registado 🎉'); }
+  catch(e){ VIEW='home'; render(); toast('Erro: '+e.message,true); }
+}
+function selSeg(id,val,btn){ document.getElementById(id).value=val; [...btn.parentElement.children].forEach(x=>x.classList.remove('on')); btn.classList.add('on'); }
+function mExtra(){
+  return `<div class="overlay" onclick="if(event.target===this){MODAL=null;render()}"><div class="sheet">
+    <button class="mclose" onclick="MODAL=null;render()">×</button><h3 class="disp">Contribuição extra</h3>
+    <p class="muted" style="margin:-6px 0 14px">Um lump sum para o bolo (ex.: um bónus). Soma já à contribuição de quem escolheres.</p>
+    <label class="field"><span>De quem</span><div class="seg"><button class="on" onclick="selSeg('x_quem','Bruno',this)">Bruno</button><button onclick="selSeg('x_quem','Laura',this)">Laura</button></div><input type="hidden" id="x_quem" value="Bruno"></label>
+    <label class="field"><span>Valor (€)</span><input id="x_amt" class="inp" type="number" inputmode="decimal" placeholder="0"></label>
+    <label class="field"><span>Nota (opcional)</span><input id="x_notas" class="inp" placeholder="ex.: bónus trabalho"></label>
+    <button class="cta" onclick="submitExtra()">Adicionar ao bolo</button></div></div>`;
+}
+async function submitExtra(){
+  const amount=parseFloat((document.getElementById('x_amt').value||'').replace(',','.'));
+  const quem=document.getElementById('x_quem').value, notas=document.getElementById('x_notas').value;
+  if(!amount||amount<=0){ toast('Mete um valor',true); return; }
+  MODAL=null; VIEW='loading'; render();
+  try{ S=await api('addExtra',{quem,amount,notas}); VIEW='home'; render(); toast('Contribuição adicionada 🎉'); }
   catch(e){ VIEW='home'; render(); toast('Erro: '+e.message,true); }
 }
 
